@@ -1,89 +1,34 @@
-import telebot
-import mysql.connector
+TOKEN = '1243750514:AAGDBypBPb9jhOFwNQY1ingfFun4Un9xZE0'
 
-import mytoken
-
-
-from datetime import datetime
-TOKEN=mytoken.TOKEN
-myBot = telebot.TeleBot(TOKEN)
-myDb=mysql.connector.connect(host='localhost',user='root',database='db_belajarbot')
-sql=myDb.cursor()
-from telebot import apihelper
-waktusekarang=datetime.now()
-
-class Mybot:
-    def __init__(self):
-        self.message
-
-    @myBot.message_handler(commands=['start'])
-    def start(message):
-        teks = mytoken.BAHASA + "\n-- admin & developer @alfinoputralaksana - SMK Taruna Bhakti -- "+"\n" \
-                        "hari ini tanggal "+str(waktusekarang)
-        myBot.reply_to(message, teks)
-
-    @myBot.message_handler(commands=['eng'])
-    def eng(message):
-        teks = mytoken.ing + "\n-- admin & developer @alfinoputralaksana - SMK Taruna Bhakti -- "+"\n" \
-                        "today's date "+str(waktusekarang)
-        myBot.reply_to(message, teks)
-
-    @myBot.message_handler(commands=['ind'])
-    def ind(message):
-        teks = mytoken.ind + "\n-- admin & developer @alfinoputralaksana - SMK Taruna Bhakti -- "+"\n" \
-                        "hari ini tanggal "+str(waktusekarang)
-        myBot.reply_to(message, teks)
-
-    @myBot.message_handler(commands=['bantuan'])
-    def tlg(message):
-        teks = mytoken.bantu
-        myBot.reply_to(message, teks)
-
-    @myBot.message_handler(commands=['help'])
-    def help(message):
-        teks = mytoken.HELP
-        myBot.reply_to(message, teks)
-
-    @myBot.message_handler(commands=['tentang'])
-    def tentang(message):
-        teks = mytoken.TENTANG
-        myBot.reply_to(message, teks)
-
-    @myBot.message_handler(commands=['about'])
-    def about(message):
-        teks = mytoken.ABOUT
-        myBot.reply_to(message, teks)
-
-    @myBot.message_handler(commands=['pp'])
-    def foto(message):
-        photo = open('img/index.png', 'rb')
-        myBot.send_photo(message.from_user.id, photo)
-        teks = "This picture"
-        myBot.reply_to(message, teks)
-
-    @myBot.message_handler(commands=['datasiswa'])
-    def menu_data_siswa(message):
-        query="select id,nama_siswa,jurusan from tbl_siswa"
-        sql.execute(query)
-        data=sql.fetchall()
-        jmldata = sql.rowcount
-        Data=''
-        if(jmldata>0):
-            # print(data)
-            no=0
-            for x in data:
-                no += 1
-                Data =Data+ str(x)
-                print(Data)
-                Data = Data.replace('(', '')
-                Data = Data.replace(')', '\n')
-                Data = Data.replace("'", '')
-                Data = Data.replace(",", '')
-        else:
-            print('data kosong')
-
-        myBot.reply_to(message,str(Data))
-
-print(myDb)
-print("-- Bot sedang berjalan --")
-myBot.polling(none_stop=True)
+BAHASA = ' Selamat Datang Di alfinoo_bot\n'\
+         'Pilih Bahasa (Choose language)\n'\
+        'ketik /ind - untuk bahasa Indonesia \n'\
+        'ketik /eng - untuk bahasa Inggris \n'
+ing = 'Welcome ‼\n' \
+        'type /pp - to see my profile picture \n' \
+        'type /datasiswa - to see student data in the database \n'\
+        'type /help - to know all my command \n'
+ind = 'Selamat Datang ‼\n' \
+        'ketik /pp - untuk melihat foto profil saya \n' \
+        'ketik /datasiswa - untuk melihat data siswa database \n'\
+        'ketik /bantuan - untuk mengetahui semua perintah saya \n'
+bantu = 'Ada yang bisa saya bantu ❓\n' \
+      'Ketik /ind - untuk berinteraksi dengan bahasa Indonesia \n' \
+      'Ketik /eng - untuk berinteraksi dengan bahasa Inggris \n' \
+      'Ketik /tentang - untuk mengetahui tentang saya \n' \
+      'Ketik /pp - untuk melihat foto profil \n' \
+      'Ketik /datasiswa - untuk tugas (koneksi ke database)\n'
+HELP = 'Is there anything I can help ❓\n' \
+      'type /ind - to interact with Bahasa Indonesia \n' \
+      'type /eng - to interact with English \n' \
+      'type /about - to know more about me \n' \
+      'type /pp - to see my profile picture \n' \
+      'type /datasiswa - for assignments (connected with database)\n'
+TENTANG = ">>> Tentang Saya <<<\n"\
+          "Saya adalah bot yang dibuat oleh Alfino Putra Laksana \n" \
+          "Saya diberi nama 'alfino' oleh developer saya \n" \
+          "Saya dibuat dengan menggunakan bahasa pemrograman Python 3  \n"
+ABOUT = ">>> About Me <<<\n"\
+        "I am a bot made by Alfino Putra Laksana \n" \
+        "I was named 'alfinoo' by my developer \n" \
+        "I made using the Python 3 programming language \n"
